@@ -1,0 +1,42 @@
+.tabs {
+  display: inline-flex;
+  background: #fff;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 4px;
+  gap: 4px;
+  max-width: 100%;
+}
+
+.tab {
+  border: 0;
+  border-radius: 6px;
+  padding: 8px 14px;
+  background: transparent;
+  color: #374151;
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.tab:hover {
+  background: #f3f4f6;
+}
+
+.tab.active {
+  color: #111827;
+  background: #e5e7eb;
+}
+
+@media (max-width: 680px) {
+  .tabs {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .tab {
+    width: 100%;
+    text-align: left;
+  }
+}

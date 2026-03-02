@@ -1,0 +1,38 @@
+<section class="document-wrap">
+  <article class="document-page">
+    <header class="doc-header">
+      <p class="doc-kicker">Course Outline</p>
+      <h2>Angular Course Outline</h2>
+      <p class="doc-subtitle">Structured learning path from foundations to enterprise delivery.</p>
+      <div class="doc-meta">
+        <span>Phases: 8</span>
+        <span>Duration: 6-9 Months</span>
+        <span>Level: Foundation to Expert</span>
+      </div>
+
+      <section class="prepared-by" aria-label="Prepared by instructor">
+        <img src="profile/me.png" alt="ROUNG CHANRIT" class="instructor-photo" />
+        <div class="instructor-info">
+          <p class="prepared-label">Prepared by</p>
+          <p class="instructor-name">ROUNG CHANRIT</p>
+          <p class="instructor-role">Full Stack Dev</p>
+        </div>
+      </section>
+    </header>
+
+    <section class="phase" *ngFor="let phase of phases; index as i">
+      <h3>
+        {{ i + 1 }}. {{ phase.title }}
+        <span class="phase-detail">({{ phase.number }} | {{ phase.duration }} | {{ phase.level }})</span>
+      </h3>
+      <ol class="topic-list">
+        <li class="topic-item" *ngFor="let topic of phase.topics">
+          <p class="topic-title">{{ topic.name }}</p>
+          <ul class="item-list">
+            <li *ngFor="let item of topic.items">{{ item }}</li>
+          </ul>
+        </li>
+      </ol>
+    </section>
+  </article>
+</section>

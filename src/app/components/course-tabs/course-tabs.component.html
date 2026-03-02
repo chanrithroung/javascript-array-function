@@ -1,0 +1,18 @@
+<nav class="tabs" aria-label="Course outline tabs">
+  <button
+    type="button"
+    class="tab"
+    [class.active]="activeTab === 'angular'"
+    (click)="selectTab('angular')"
+  >
+    Angular Course Outline
+  </button>
+  <button
+    type="button"
+    class="tab"
+    [class.active]="activeTab === 'spring'"
+    (click)="selectTab('spring')"
+  >
+    Spring Boot Course Outline
+  </button>
+</nav>

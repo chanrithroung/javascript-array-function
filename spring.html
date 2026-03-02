@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spring Boot Enterprise Developer — Course Outline</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f0e8;
+    --surface: #fffdf8;
+    --border: #d8ceb8;
+    --accent: #1a6b3c;
+    --accent2: #2d9e5f;
+    --dark: #0f1f15;
+    --text: #1c1c1c;
+    --muted: #7a7060;
+    --leaf: #4caf72;
+    --warm: #c8702a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+  }
+
+  /* Organic dot pattern */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(26,107,60,0.08) 1px, transparent 1px);
+    background-size: 28px 28px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 0 28px 100px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* HERO */
+  header {
+    padding: 80px 0 60px;
+    position: relative;
+  }
+
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+
+  .eyebrow-line {
+    width: 40px;
+    height: 2px;
+    background: var(--accent);
+  }
+
+  .eyebrow-text {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(44px, 7vw, 80px);
+    font-weight: 900;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    color: var(--dark);
+    margin-bottom: 20px;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .subtitle {
+    font-size: 15px;
+    color: var(--muted);
+    max-width: 500px;
+    line-height: 1.7;
+    border-left: 3px solid var(--accent);
+    padding-left: 16px;
+    margin-top: 24px;
+  }
+
+  .stats {
+    display: flex;
+    gap: 0;
+    margin-top: 48px;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .stat {
+    padding: 20px 36px 20px 0;
+    margin-right: 36px;
+    border-right: 1px solid var(--border);
+  }
+  .stat:last-child { border-right: none; }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--accent);
+    display: block;
+  }
+
+  .stat-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 2px;
+    display: block;
+  }
+
+  /* DIVIDER */
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 60px 0 28px;
+  }
+
+  .divider-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    background: rgba(26,107,60,0.08);
+    border: 1px solid rgba(26,107,60,0.2);
+    padding: 5px 12px;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+
+  .divider-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--dark);
+  }
+
+  .divider-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .divider-dur {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+  }
+
+  .level-tag {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 2px;
+    margin-left: 10px;
+    vertical-align: middle;
+  }
+
+  .tag-foundation { background: rgba(200,112,42,0.12); color: var(--warm); border: 1px solid rgba(200,112,42,0.25); }
+  .tag-intermediate { background: rgba(26,107,60,0.1); color: var(--accent); border: 1px solid rgba(26,107,60,0.2); }
+  .tag-advanced { background: rgba(45,158,95,0.1); color: var(--accent2); border: 1px solid rgba(45,158,95,0.25); }
+  .tag-expert { background: rgba(15,31,21,0.08); color: var(--dark); border: 1px solid rgba(15,31,21,0.15); }
+
+  /* GRID */
+  .phase {
+    animation: rise 0.5s ease both;
+  }
+
+  @keyframes rise {
+    from { opacity:0; transform: translateY(16px); }
+    to { opacity:1; transform: translateY(0); }
+  }
+
+  .topics {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 14px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 22px;
+    border-radius: 3px;
+    transition: box-shadow 0.2s, transform 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--accent);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .card:hover {
+    box-shadow: 0 8px 32px rgba(26,107,60,0.1);
+    transform: translateY(-2px);
+  }
+
+  .card:hover::before { opacity: 1; }
+
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 12px;
+  }
+
+  .card-items {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .card-items li {
+    font-size: 12px;
+    color: var(--muted);
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    line-height: 1.45;
+  }
+
+  .card-items li::before {
+    content: '▸';
+    color: var(--accent);
+    font-size: 10px;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+
+  /* FOOTER */
+  footer {
+    margin-top: 80px;
+    padding: 32px 0;
+    border-top: 2px solid var(--dark);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .footer-note {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 900;
+    color: var(--accent);
+    font-style: italic;
+  }
+
+  @media (max-width: 600px) {
+    .topics { grid-template-columns: 1fr; }
+    .stats { flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="eyebrow">
+      <div class="eyebrow-line"></div>
+      <span class="eyebrow-text">Enterprise Spring Boot Mastery</span>
+    </div>
+    <h1>Master <em>Spring Boot</em><br>for Enterprise</h1>
+    <p class="subtitle">A structured course outline to take you from Java basics to architecting production-grade microservices used by Fortune 500 companies.</p>
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-num">9</span>
+        <span class="stat-label">Phases</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">45+</span>
+        <span class="stat-label">Core Topics</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">6–9</span>
+        <span class="stat-label">Months</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">Java</span>
+        <span class="stat-label">Language</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- PHASE 1 -->
+  <div class="phase">
+    <div class="section-divider">
+      <span class="divider-num">PHASE 01</span>
+      <h2 class="divider-title">Java & OOP Foundations <span class="level-tag tag-foundation">Foundation</span></h2>
+      <div class="divider-line"></div>
+      <span class="divider-dur">2–3 Weeks</span>
+    </div>
+    <div class="topics">
+      <div class="card">
+        <div class="card-title">Core Java</div>
+        <ul class="card-items">
+          <li>OOP: classes, inheritance, polymorphism, interfaces</li>
+          <li>Collections: List, Map, Set, Queue</li>
+          <li>Generics & type safety</li>
+          <li>Exception handling patterns</li>
+          <li>Java 17+ features (records, sealed classes, pattern matching)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">Functional & Modern Java</div>
+        <ul class="card-items">
+          <li>Lambda expressions & method references</li>
+          <li>Streams API (map, filter, reduce, collect)</li>
+          <li>Optional for null safety</li>
+          <li>CompletableFuture basics</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">Build Tools</div>
+        <ul class="card-items">
+          <li>Maven: POM, lifecycle, plugins</li>
+          <li>Gradle: build.gradle, tasks</li>
+          <li>Dependency management & versioning</li>
+          <li>Multi-module projects</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHASE 2 -->
+  <div class="phase">
+    <div class="section-divider">
+      <span class="divider-num">PHASE 02</span>
+      <h2 class="divider-title">Spring Core & IoC <span class="level-tag tag-foundation">Foundation</span></h2>
+      <div class="divider-line"></div>
+      <span class="divider-dur">2 Weeks</span>
+    </div>
+    <div class="topics">
+      <div class="card">
+        <div class="card-title">Spring Framework</div>
+        <ul class="card-items">
+          <li>IoC container & ApplicationContext</li>
+          <li>Dependency Injection (constructor, setter, field)</li>
+          <li>Bean scopes: singleton, prototype, request, session</li>
+          <li>@Component, @Service, @Repository, @Controller</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">Spring Boot Essentials</div>
+        <ul class="card-items">
+          <li>Auto-configuration & @SpringBootApplication</li>
+          <li>application.properties / application.yml</li>
+          <li>Profiles: dev, staging, prod</li>
+          <li>Spring Boot Actuator</li>
+          <li>Externalized configuration with @Value & @ConfigurationProperties</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">Spring AOP</div>
+        <ul class="card-items">
+          <li>Aspect-Oriented Programming concepts</li>
+          <li>@Aspect, @Before, @After, @Around</li>
+          <li>Pointcut expressions</li>
+          <li>Use cases: logging, auditing, transactions</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHASE 3 -->
+  <div class="phase">
+    <div class="section-divider">
+      <span class="divider-num">PHASE 03</span>
+      <h2 class="divider-title">REST API Development <span class="level-tag tag-intermediate">Intermediate</span></h2>
+      <div class="divider-line"></div>
+      <span class="divider-dur">2–3 Weeks</span>
+    </div>
+    <div class="topics">
+      <div class="card">
+        <div class="card-title">Spring MVC & REST</div>
+        <ul class="card-items">
+          <li>@RestController, @RequestMapping</li>
+          <li>GET, POST, PUT, PATCH, DELETE</li>
+          <li>Path variables, query params, request body</li>
+          <li>ResponseEntity & HTTP status codes</li>
+          <li>Content negotiation (JSON/XML)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">Validation & Error Handling</div>
+        <ul class="card-items">
+          <li>Bean Validation (Jakarta Validation API)</li>
+          <li>@Valid, @NotNull, @Size, @Pattern</li>
+          <li>Custom validators</li>
+          <li>@ControllerAdvice & @ExceptionHandler</li>
+          <li>Problem Details (RFC 9457)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">API Design Best Practices</div>
+        <ul class="card-items">
+          <li>RESTful resource naming conventions</li>
+          <li>Versioning strategies (URI, header)</li>
+          <li>HATEOAS</li>
+          <li>OpenAPI / Swagger documentation</li>
+          <li>DTO pattern & MapStruct</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHASE 4 -->
+  <div class="phase">
+    <div class="section-divider">
+      <span class="divider-num">PHASE 04</span>
+      <h2 class="divider-title">Data & Persistence <span class="level-tag tag-intermediate">Intermediate</span></h2>
+      <div class="divider-line"></div>
+      <span class="divider-dur">3 Weeks</span>
+    </div>
+    <div class="topics">
+      <div class="card">
+        <div class="card-title">Spring Data JPA</div>
+        <ul class="card-items">
+          <li>JPA entities & relationships (OneToMany, ManyToMany)</li>
+          <li>JpaRepository, CrudRepository</li>
+          <li>JPQL & native queries</li>
+          <li>Pagination & sorting</li>
+          <li>Projections & DTOs from queries</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">Database Management</div>
+        <ul class="card-items">
+          <li>Flyway / Liquibase for schema migrations</li>
+          <li>Connection pooling with HikariCP</li>
+          <li>Multiple datasources</li>
+          <li>Transactional management (@Transactional)</li>
+          <li>Optimistic vs pessimistic locking</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">NoSQL & Caching</div>
+        <ul class="card-items">
+          <li>Spring Data MongoDB</li>
+          <li>Redis with Spring Cache</li>
+          <li>@Cacheable, @CacheEvict, @CachePut</li>
+          <li>Cache strategies: TTL, LRU</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">Query Optimization</div>
+        <ul class="card-items">
+          <li>N+1 problem & fetch strategies</li>
+          <li>@EntityGraph for eager loading</li>
+          <li>Criteria API & Specifications</li>
+          <li>QueryDSL for type-safe queries</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHASE 5 -->
+  <div class="phase">
+    <div class="section-divider">
+      <span class="divider-num">PHASE 05</span>
+      <h2 class="divider-title">Security <span class="level-tag tag-intermediate">Intermediate</span></h2>
+      <div class="divider-line"></div>
+      <span class="divider-dur">2–3 Weeks</span>
+    </div>
+    <div class="topics">
+      <div class="card">
+        <div class="card-title">Spring Security Core</div>
+        <ul class="card-items">
+          <li>Authentication vs Authorization</li>
+          <li>SecurityFilterChain configuration</li>
+          <li>UserDetailsService & PasswordEncoder</li>
+          <li>Method-level security (@PreAuthorize)</li>
+          <li>CORS & CSRF configuration</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">JWT & OAuth2</div>
+        <ul class="card-items">
+          <li>Stateless JWT authentication</li>
+          <li>OAuth2 Resource Server setup</li>
+          <li>OAuth2 Client (Google, GitHub login)</li>
+          <li>Keycloak / Auth0 integration</li>
+          <li>Token refresh & revocation</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">Security Best Practices</div>
+        <ul class="card-items">
+          <li>OWASP Top 10 for APIs</li>
+          <li>Input sanitization & SQL injection prevention</li>
+          <li>Rate limiting & brute-force protection</li>
+          <li>Secrets management (Vault, AWS SSM)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHASE 6 -->
+  <div class="phase">
+    <div class="section-divider">
+      <span class="divider-num">PHASE 06</span>
+      <h2 class="divider-title">Messaging & Async Processing <span class="level-tag tag-advanced">Advanced</span></h2>
+      <div class="divider-line"></div>
+      <span class="divider-dur">2 Weeks</span>
+    </div>
+    <div class="topics">
+      <div class="card">
+        <div class="card-title">Apache Kafka</div>
+        <ul class="card-items">
+          <li>Producers, consumers, consumer groups</li>
+          <li>Spring Kafka (@KafkaListener)</li>
+          <li>Topics, partitions & offsets</li>
+          <li>Exactly-once semantics</li>
+          <li>Schema Registry & Avro</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">RabbitMQ</div>
+        <ul class="card-items">
+          <li>Exchanges, queues, bindings</li>
+          <li>Spring AMQP & @RabbitListener</li>
+          <li>Dead-letter queues</li>
+          <li>Message acknowledgment strategies</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">Async & Scheduling</div>
+        <ul class="card-items">
+          <li>@Async & thread pool configuration</li>
+          <li>@Scheduled & Cron expressions</li>
+          <li>Spring Batch for bulk processing</li>
+          <li>Event-driven with ApplicationEventPublisher</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHASE 7 -->
+  <div class="phase">
+    <div class="section-divider">
+      <span class="divider-num">PHASE 07</span>
+      <h2 class="divider-title">Microservices Architecture <span class="level-tag tag-advanced">Advanced</span></h2>
+      <div class="divider-line"></div>
+      <span class="divider-dur">3 Weeks</span>
+    </div>
+    <div class="topics">
+      <div class="card">
+        <div class="card-title">Service Communication</div>
+        <ul class="card-items">
+          <li>RestTemplate vs WebClient</li>
+          <li>OpenFeign declarative HTTP clients</li>
+          <li>gRPC with Spring Boot</li>
+          <li>Service discovery with Eureka</li>
+          <li>Load balancing with Spring Cloud LoadBalancer</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">Spring Cloud</div>
+        <ul class="card-items">
+          <li>API Gateway (Spring Cloud Gateway)</li>
+          <li>Config Server for centralized config</li>
+          <li>Circuit Breaker with Resilience4j</li>
+          <li>Distributed tracing (Zipkin/Sleuth)</li>
+          <li>Saga pattern for distributed transactions</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">Reactive Programming</div>
+        <ul class="card-items">
+          <li>Project Reactor (Mono, Flux)</li>
+          <li>Spring WebFlux</li>
+          <li>Reactive data with R2DBC</li>
+          <li>Backpressure strategies</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">Design Patterns</div>
+        <ul class="card-items">
+          <li>CQRS (Command Query Responsibility Segregation)</li>
+          <li>Event Sourcing</li>
+          <li>Outbox pattern for reliable messaging</li>
+          <li>Strangler Fig for legacy migration</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHASE 8 -->
+  <div class="phase">
+    <div class="section-divider">
+      <span class="divider-num">PHASE 08</span>
+      <h2 class="divider-title">Testing <span class="level-tag tag-advanced">Advanced</span></h2>
+      <div class="divider-line"></div>
+      <span class="divider-dur">2 Weeks</span>
+    </div>
+    <div class="topics">
+      <div class="card">
+        <div class="card-title">Unit Testing</div>
+        <ul class="card-items">
+          <li>JUnit 5 & AssertJ</li>
+          <li>Mockito: @Mock, @InjectMocks, @Spy</li>
+          <li>Parameterized tests</li>
+          <li>Test slices: @WebMvcTest, @DataJpaTest</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">Integration Testing</div>
+        <ul class="card-items">
+          <li>@SpringBootTest full context</li>
+          <li>Testcontainers (PostgreSQL, Redis, Kafka)</li>
+          <li>MockMvc & WebTestClient</li>
+          <li>WireMock for external APIs</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">Contract & Performance</div>
+        <ul class="card-items">
+          <li>Spring Cloud Contract (consumer-driven)</li>
+          <li>Pact for microservice contracts</li>
+          <li>JMeter / Gatling load testing</li>
+          <li>Test coverage with JaCoCo</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHASE 9 -->
+  <div class="phase">
+    <div class="section-divider">
+      <span class="divider-num">PHASE 09</span>
+      <h2 class="divider-title">DevOps, Cloud & Observability <span class="level-tag tag-expert">Expert</span></h2>
+      <div class="divider-line"></div>
+      <span class="divider-dur">2–3 Weeks</span>
+    </div>
+    <div class="topics">
+      <div class="card">
+        <div class="card-title">Containerization</div>
+        <ul class="card-items">
+          <li>Docker: Dockerfile, multi-stage builds</li>
+          <li>Docker Compose for local dev</li>
+          <li>Jib for container image builds</li>
+          <li>Kubernetes: Pods, Deployments, Services</li>
+          <li>Helm charts for K8s packaging</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">CI/CD Pipelines</div>
+        <ul class="card-items">
+          <li>GitHub Actions / GitLab CI / Jenkins</li>
+          <li>Build, test, scan, deploy stages</li>
+          <li>SAST with Sonar / Snyk</li>
+          <li>Blue-Green & Canary deployments</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">Observability</div>
+        <ul class="card-items">
+          <li>Micrometer metrics + Prometheus</li>
+          <li>Grafana dashboards</li>
+          <li>Structured logging (Logback + ELK)</li>
+          <li>Distributed tracing (OpenTelemetry)</li>
+          <li>Spring Boot Actuator health endpoints</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">Cloud Deployment</div>
+        <ul class="card-items">
+          <li>AWS (ECS, EKS, RDS, ElastiCache)</li>
+          <li>Azure Spring Apps</li>
+          <li>GCP Cloud Run</li>
+          <li>Secrets management (AWS Secrets Manager, Vault)</li>
+          <li>Infrastructure as Code (Terraform basics)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span class="footer-note">Build a real microservice project at each phase → deploy to production</span>
+    <span class="footer-logo">Spring Boot · Expert</span>
+  </footer>
+
+</div>
+</body>
+</html>
