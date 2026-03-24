@@ -1,7 +1,5 @@
-/// 
-const names = ["phument", "rotana", "chanrith", "rotana"]
-const index = names.indexOf("rotana")
+const image = document.getElementById('image');
 
-// const index = names.indexOf("rotana", names.indexOf("rotana") + 1)
+image.addEventListener('drag', function(event) {
 
-console.log(index);
+})
